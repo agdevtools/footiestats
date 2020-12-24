@@ -20,4 +20,10 @@ class FootieController(private val footieService: FootieService) {
         val responseEntity: ResponseEntity<String?>? = footieService.getLeagueTable()
         return Objects.requireNonNull(responseEntity?.body)
     }
+
+    @RequestMapping(value = ["/form"], produces = [MediaType.APPLICATION_JSON_VALUE], method = [RequestMethod.GET])
+    fun getForm(): String? {
+        val responseEntity: ResponseEntity<String?>? = footieService.getForm()
+        return Objects.requireNonNull(responseEntity?.body)
+    }
 }
