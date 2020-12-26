@@ -29,7 +29,7 @@ class FootieService {
 
         val response = restTemplate.exchange(uri, HttpMethod.GET, entity, FootieStatsModel::class.java)
         val standings = response.body?.standings
-        val table = standings?.get(0)?.table?.get(2).toString()
+        val table = standings?.get(0)?.table?.get(2)?.form
 
        return ResponseEntity(table, HttpStatus.OK)
     }
