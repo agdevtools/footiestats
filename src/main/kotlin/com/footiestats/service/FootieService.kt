@@ -18,7 +18,7 @@ class FootieService {
         return restTemplate.exchange(uri, HttpMethod.GET, entity, String::class.java)
     }
 
-   fun getForm(): ResponseEntity<String?>? {
+   fun getForm(): ResponseEntity<Array<String>> {
 
         val uri = "https://api.football-data.org/v2/competitions/PL/standings"
         val restTemplate = RestTemplate()
@@ -31,6 +31,9 @@ class FootieService {
         val standings = response.body?.standings
         val table = standings?.get(0)?.table?.get(2)?.form
 
-       return ResponseEntity(table, HttpStatus.OK)
+
+        val list = table?.split(",")?.toTypedArray()
+
+       return ResponseEntity(list, HttpStatus.OK)
     }
 }

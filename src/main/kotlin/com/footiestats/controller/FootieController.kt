@@ -4,6 +4,7 @@ import com.footiestats.service.FootieService
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -21,9 +22,7 @@ class FootieController(private val footieService: FootieService) {
         return Objects.requireNonNull(responseEntity?.body)
     }
 
-    @RequestMapping(value = ["/form"], produces = [MediaType.APPLICATION_JSON_VALUE], method = [RequestMethod.GET])
-    fun getForm(): String? {
-        val responseEntity: ResponseEntity<String?>? = footieService.getForm()
-        return Objects.requireNonNull(responseEntity?.body)
-    }
+    @GetMapping(value = ["/form"])
+    fun getForm(): ResponseEntity<Array<String>> = footieService.getForm()
+
 }
