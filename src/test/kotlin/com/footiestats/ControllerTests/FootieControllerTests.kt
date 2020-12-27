@@ -26,8 +26,8 @@ internal class FootieControllerTests{
     @Test
     fun `Verify that FootieController GetLeague calls Footie Service `() {
 
-
-        verify(footieService,times(0)).getLeagueTable()
+        footieController.getLeagueTable()
+        verify(footieService,times(1)).getLeagueTable()
 
     }
 

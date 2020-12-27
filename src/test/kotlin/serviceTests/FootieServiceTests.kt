@@ -27,4 +27,13 @@ internal class FootieServiceTests{
 
     }
 
+    @Test
+    fun `Verify that FootieService GetLeague returns a valid body`() {
+
+        val response = footieService.getLeagueTable()
+
+        response?.body?.isNotEmpty()?.let { assert(it) }
+
+    }
+
 }

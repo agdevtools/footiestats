@@ -17,10 +17,7 @@ import java.util.*
 class FootieController(private val footieService: FootieService) {
 
     @RequestMapping(value = ["/league"], produces = [MediaType.APPLICATION_JSON_VALUE], method = [RequestMethod.GET])
-    fun getLeagueTable(): String? {
-        val responseEntity: ResponseEntity<String?>? = footieService.getLeagueTable()
-        return Objects.requireNonNull(responseEntity?.body)
-    }
+    fun getLeagueTable(): ResponseEntity<String?>? = footieService.getLeagueTable()
 
     @GetMapping(value = ["/form"])
     fun getForm(): ResponseEntity<Array<String>> = footieService.getForm()
