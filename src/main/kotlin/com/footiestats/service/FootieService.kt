@@ -1,6 +1,6 @@
 package com.footiestats.service
 
-import com.footiestats.model.FootieStatsModel
+import com.footiestats.model.footieStatsModel.FootieStatsModel
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate

@@ -1,6 +1,6 @@
 package com.footiestats.controller
 
-import com.footiestats.model.FootieStatsModel
+import com.footiestats.model.footieStatsModel.FootieStatsModel
 import com.footiestats.service.FootieService
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.ResponseEntity

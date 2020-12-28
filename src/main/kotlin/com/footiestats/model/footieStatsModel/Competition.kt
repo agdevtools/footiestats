@@ -1,6 +1,6 @@
-package com.footiestats.model
+package com.footiestats.model.footieStatsModel
 
-import Area
+import com.footiestats.model.footieStatsModel.Area
 import com.google.gson.annotations.SerializedName
 
 
