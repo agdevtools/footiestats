@@ -13,7 +13,7 @@ import java.util.*
 
 @Configuration
 @RestController
-@RequestMapping("/footiestats")
+@RequestMapping("/api")
 class FootieController(private val footieService: FootieService) {
 
     @RequestMapping(value = ["/league"], produces = [MediaType.APPLICATION_JSON_VALUE], method = [RequestMethod.GET])

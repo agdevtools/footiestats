@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse
 @Configuration
 class AppConfig {
 
-    @Configuration
-    class ConFigureCORS {
+
         @Bean
         fun corsFilter(): FilterRegistrationBean<*> {
             val source = UrlBasedCorsConfigurationSource()
@@ -29,5 +28,5 @@ class AppConfig {
             bean.order = 0
             return bean
         }
-    }
+               
 }
