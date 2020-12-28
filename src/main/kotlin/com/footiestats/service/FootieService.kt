@@ -6,35 +6,34 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
 
-val uri = "https://api.football-data.org/v2/competitions/PL/standings"
-val restTemplate = RestTemplate()
-val headers = HttpHeaders()
+private const val uri = "https://api.football-data.org/v2/competitions/PL/standings"
+private val restTemplate = RestTemplate()
 
 @Service
 class FootieService {
     fun getLeagueTable(): ResponseEntity<FootieStatsModel> {
-
-        headers.accept = listOf(MediaType.APPLICATION_JSON)
-        headers.set("X-Auth-Token", "2a88122678894952829ef98dd6e898f6")
-        val entity = HttpEntity("parameters", headers)
-
-        val response = restTemplate.exchange(uri, HttpMethod.GET, entity, FootieStatsModel::class.java)
+        val response = makeRestCall()
         return ResponseEntity(response.body, HttpStatus.OK)
     }
 
-   fun getForm(): ResponseEntity<Array<String>> {
+   fun getFormList(): ResponseEntity<Array<String>> {
+        val response = makeRestCall()
+        return ResponseEntity(getLeagueTableList(response), HttpStatus.OK)
+    }
 
+    private fun makeRestCall():ResponseEntity<FootieStatsModel> {
+        return restTemplate.exchange(uri, HttpMethod.GET, getHeaders(), FootieStatsModel::class.java)
+    }
+
+    fun getHeaders(): HttpEntity<String> {
+        val headers = HttpHeaders()
         headers.accept = listOf(MediaType.APPLICATION_JSON)
         headers.set("X-Auth-Token", "2a88122678894952829ef98dd6e898f6")
-        val entity = HttpEntity("parameters", headers)
+        return HttpEntity("parameters", headers)
+    }
 
-        val response = restTemplate.exchange(uri, HttpMethod.GET, entity, FootieStatsModel::class.java)
-        val standings = response.body?.standings
-        val table = standings?.get(0)?.table?.get(2)?.form
-
-
-        val list = table?.split(",")?.toTypedArray()
-
-        return ResponseEntity(list, HttpStatus.OK)
+    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):Array<String>? {
+        val leagueTable = response.body?.standings?.get(0)?.table?.get(2)?.form
+        return leagueTable?.split(",")?.toTypedArray()
     }
 }

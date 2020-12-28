@@ -21,7 +21,7 @@ internal class FootieServiceTests{
 
         expectedlist.addAll(listOf("W", "W", "L","W","D"))
 
-        val response = footieService.getForm()
+        val response = footieService.getFormList()
 
         assertEquals(response.body?.size,5)
 
@@ -32,7 +32,7 @@ internal class FootieServiceTests{
 
         val response = footieService.getLeagueTable()
 
-        response?.body?.isNotEmpty()?.let { assert(it) }
+        assert(response.hasBody())
 
     }
 

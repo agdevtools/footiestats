@@ -4,7 +4,6 @@ import com.footiestats.controller.FootieController
 import com.footiestats.service.FootieService
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,11 +35,11 @@ internal class FootieControllerTests{
 
         val expectedList = arrayOf("W", "W", "L","W","D")
 
-        whenever(footieService.getForm()).thenReturn(ResponseEntity.ok(expectedList))
+        whenever(footieService.getFormList()).thenReturn(ResponseEntity.ok(expectedList))
 
         val actualList = footieController.getForm()
 
-        verify(footieService,times(1)).getForm()
+        verify(footieService,times(1)).getFormList()
         assertEquals(actualList.body?.size, 5)
         assertEquals(actualList.body?.get(0),"W")
         assertEquals(actualList.body?.get(4),"D")
