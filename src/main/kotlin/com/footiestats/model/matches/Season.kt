@@ -9,6 +9,6 @@ data class Season (
         @SerializedName("startDate") var startDate : String,
         @SerializedName("endDate") var endDate : String,
         @SerializedName("currentMatchday") var currentMatchday : Int,
-        @SerializedName("winner") var winner : String
+        @SerializedName("winner") var winner : String?
 
 )

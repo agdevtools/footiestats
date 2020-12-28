@@ -20,4 +20,7 @@ class FootieController(private val footieService: FootieService) {
     @GetMapping(value = ["/form"])
     fun getForm(): ResponseEntity<Array<String>> = footieService.getFormList()
 
+    @GetMapping(value = ["/next"])
+    fun getNextFixture(): ResponseEntity<String> = footieService.getNextFixture()
+
 }
