@@ -7,8 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.springframework.http.ResponseEntity
 
 internal class FootieControllerTests{
@@ -35,11 +34,11 @@ internal class FootieControllerTests{
 
         val expectedList = arrayOf("W", "W", "L","W","D")
 
-        whenever(footieService.getFormList()).thenReturn(ResponseEntity.ok(expectedList))
+        whenever(footieService.getFormList(anyInt())).thenReturn(ResponseEntity.ok(expectedList))
 
-        val actualList = footieController.getForm()
+        val actualList = footieController.getForm(66)
 
-        verify(footieService,times(1)).getFormList()
+        verify(footieService,times(1)).getFormList(anyInt())
         assertEquals(actualList.body?.size, 5)
         assertEquals(actualList.body?.get(0),"W")
         assertEquals(actualList.body?.get(4),"D")

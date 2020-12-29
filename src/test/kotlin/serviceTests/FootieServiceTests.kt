@@ -24,7 +24,7 @@ internal class FootieServiceTests{
 
         expectedlist.addAll(listOf("W", "W", "L","W","D"))
 
-        val response = footieService.getFormList()
+        val response = footieService.getFormList(66)
 
         assertEquals(response.body?.size,5)
 

@@ -2,7 +2,6 @@ package com.footiestats.service
 
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
-import com.footiestats.model.footieStatsModel.Table
 import com.footiestats.model.matches.Matches
 import com.footiestats.model.matches.MatchesModel
 import org.springframework.http.*
@@ -56,7 +55,7 @@ class FootieService {
                 }
             }
         }
-        return formDetails?.split(",")?.toTypedArray()
+        return formDetails.split(",").toTypedArray()
     }
 
     fun getCurrentMatchDay(response: ResponseEntity<MatchesModel>): Int? {
@@ -72,7 +71,7 @@ class FootieService {
             var matchDetails = Matches()
             if (matches != null) {
                 for (match in matches)
-                    if (match.matchday?.equals(getNextMatchDay(response))!!) {
+                    if (match.matchday.equals(getNextMatchDay(response))) {
                         matchDetails = match
                     }
 
