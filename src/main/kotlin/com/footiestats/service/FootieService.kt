@@ -28,10 +28,6 @@ class FootieService {
         return ResponseEntity(getNextFixtureDetails(response),HttpStatus.OK)
     }
 
-    private fun getNextMatchDay(response: ResponseEntity<MatchesModel>) : Int? {
-        return getCurrentMatchDay(response)?.plus(1)
-    }
-
     private fun makeStandingsRestCall():ResponseEntity<FootieStatsModel> {
         return restTemplate.exchange(uri, HttpMethod.GET, getHeaders(), FootieStatsModel::class.java)
     }
@@ -56,10 +52,13 @@ class FootieService {
         return response.body?.matches?.get(0)?.season?.currentMatchday
     }
 
+    private fun getNextMatchDay(response: ResponseEntity<MatchesModel>) : Int? {
+        return getCurrentMatchDay(response)?.plus(1)
+    }
+
     private fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : String {
             val matches = response.body?.matches
-            var matchDetails : String = ""
-            val next = getNextMatchDay(response)
+            var matchDetails = ""
             if (matches != null) {
                 for (match in matches)
                     if (match.matchday.equals(getNextMatchDay(response))) {
