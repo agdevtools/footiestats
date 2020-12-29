@@ -1,6 +1,9 @@
 package com.footiestats.service
 
+import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
+import com.footiestats.model.footieStatsModel.Table
+import com.footiestats.model.matches.Matches
 import com.footiestats.model.matches.MatchesModel
 import org.springframework.http.*
 import org.springframework.stereotype.Service
@@ -18,14 +21,14 @@ class FootieService {
         return ResponseEntity(response.body, HttpStatus.OK)
     }
 
-   fun getFormList(): ResponseEntity<Array<String>> {
+   fun getFormList(teamId: Int) : ResponseEntity<Array<String>> {
         val response = makeStandingsRestCall()
-        return ResponseEntity(getLeagueTableList(response), HttpStatus.OK)
+        return ResponseEntity(getLeagueTableList(response,teamId), HttpStatus.OK)
     }
 
-    fun getNextFixture(): ResponseEntity<String> {
+    fun getNextFixture(): ResponseEntity<MatchResponse> {
         val response = makeMatchesRestCall()
-        return ResponseEntity(getNextFixtureDetails(response),HttpStatus.OK)
+        return ResponseEntity(MatchResponse(200, getNextFixtureDetails(response)),HttpStatus.OK)
     }
 
     private fun makeStandingsRestCall():ResponseEntity<FootieStatsModel> {
@@ -43,26 +46,34 @@ class FootieService {
         return HttpEntity("parameters", headers)
     }
 
-    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):Array<String>? {
-        val leagueTable = response.body?.standings?.get(0)?.table?.get(2)?.form
-        return leagueTable?.split(",")?.toTypedArray()
+    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>, teamId: Int):Array<String>? {
+        val tables = response.body?.standings?.get(0)?.table
+        var formDetails = ""
+        if (tables != null) {
+            for (table in tables) {
+                if (table.team?.id?.equals(teamId)!!) {
+                    formDetails = table.form.toString()
+                }
+            }
+        }
+        return formDetails?.split(",")?.toTypedArray()
     }
 
-    private fun getCurrentMatchDay(response: ResponseEntity<MatchesModel>): Int? {
+    fun getCurrentMatchDay(response: ResponseEntity<MatchesModel>): Int? {
         return response.body?.matches?.get(0)?.season?.currentMatchday
     }
 
-    private fun getNextMatchDay(response: ResponseEntity<MatchesModel>) : Int? {
+    fun getNextMatchDay(response: ResponseEntity<MatchesModel>) : Int? {
         return getCurrentMatchDay(response)?.plus(1)
     }
 
-    private fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : String {
+   fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : Matches {
             val matches = response.body?.matches
-            var matchDetails = ""
+            var matchDetails = Matches()
             if (matches != null) {
                 for (match in matches)
-                    if (match.matchday.equals(getNextMatchDay(response))) {
-                        matchDetails = match.homeTeam.name +" "+"vs"+" "+match.awayTeam.name
+                    if (match.matchday?.equals(getNextMatchDay(response))!!) {
+                        matchDetails = match
                     }
 
             }
