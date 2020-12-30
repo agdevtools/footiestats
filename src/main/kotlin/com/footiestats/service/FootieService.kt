@@ -2,6 +2,7 @@ package com.footiestats.service
 
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
+import com.footiestats.model.matches.MatchDetails
 import com.footiestats.model.matches.Matches
 import com.footiestats.model.matches.MatchesModel
 import org.springframework.http.*
@@ -66,13 +67,18 @@ class FootieService {
         return getCurrentMatchDay(response)?.plus(1)
     }
 
-   fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : Matches {
+   fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : MatchDetails {
             val matches = response.body?.matches
-            var matchDetails = Matches()
+            var matchDetails = MatchDetails()
             if (matches != null) {
                 for (match in matches)
                     if (match.matchday.equals(getNextMatchDay(response))) {
-                        matchDetails = match
+                        matchDetails.id = match.id
+                        matchDetails.status = match.status
+                        matchDetails.utcDate = match.utcDate
+                        matchDetails.matchday = match.matchday
+                        matchDetails.homeTeam = match.homeTeam.name
+                        matchDetails.awayTeam = match.awayTeam.name
                     }
 
             }

@@ -50,7 +50,7 @@ internal class FootieServiceTests{
 
         assertEquals(actualHeaders.body,expectedHttpEntity.body)
         assertEquals(actualHeaders.headers.size, 2)
-        assertEquals(actualHeaders.headers.accept.get(0).toString(),"application/json")
+        assertEquals(actualHeaders.headers.accept[0].toString(),"application/json")
         assertEquals(actualHeaders.headers.get("X-Auth-Token").toString(), "[2a88122678894952829ef98dd6e898f6]")
     }
 
