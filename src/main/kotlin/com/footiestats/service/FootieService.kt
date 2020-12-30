@@ -79,6 +79,8 @@ class FootieService {
                         matchDetails.matchday = match.matchday
                         matchDetails.homeTeam = match.homeTeam.name
                         matchDetails.awayTeam = match.awayTeam.name
+                        matchDetails.homeTeamId = match.homeTeam.id
+                        matchDetails.awayTeamId = match.awayTeam.id
                     }
 
             }
