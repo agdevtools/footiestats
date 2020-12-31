@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class MatchResponse (
         @SerializedName("permission") var status : Int,
-        @SerializedName("matchDetails") var fixtureDetails : FixtureDetails
+        @SerializedName("matchDetails") var fixtureDetails : List<FixtureDetails>
 )

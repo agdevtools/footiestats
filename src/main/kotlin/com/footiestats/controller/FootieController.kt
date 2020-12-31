@@ -23,6 +23,6 @@ class FootieController(private val footieService: FootieService) {
     fun getForm(@PathVariable(value ="teamId") teamId: Int ): ResponseEntity<Array<String>> = footieService.getFormList(teamId)
 
     @GetMapping(value = ["/next"])
-    fun getNextFixture(): ResponseEntity<MatchResponse> = footieService.getNextFixture()
+    fun getNextFixtures(): ResponseEntity<MatchResponse> = footieService.getNextFixtures()
 
 }

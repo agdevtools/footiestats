@@ -25,7 +25,7 @@ class FootieService {
         return ResponseEntity(getLeagueTableList(response,teamId), HttpStatus.OK)
     }
 
-    fun getNextFixture(): ResponseEntity<MatchResponse> {
+    fun getNextFixtures(): ResponseEntity<MatchResponse> {
         val response = makeMatchesRestCall()
         return ResponseEntity(MatchResponse(200, getNextFixtureDetails(response)),HttpStatus.OK)
     }
@@ -66,12 +66,13 @@ class FootieService {
         return getCurrentMatchDay(response)?.plus(1)
     }
 
-   fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : FixtureDetails {
+   fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : List<FixtureDetails> {
             val matches = response.body?.matches
-            var matchDetails = FixtureDetails()
+            var fixtureList = mutableListOf<FixtureDetails>()
             if (matches != null) {
                 for (match in matches)
-                    if (match.matchday.equals(getNextMatchDay(response))) {
+                    if (match.matchday in getCurrentMatchDay(response)!!..getCurrentMatchDay(response)?.plus(4)!!) {
+                        var matchDetails = FixtureDetails()
                         matchDetails.id = match.id
                         matchDetails.status = match.status
                         matchDetails.utcDate = match.utcDate
@@ -80,9 +81,9 @@ class FootieService {
                         matchDetails.awayTeam = match.awayTeam.name
                         matchDetails.homeTeamId = match.homeTeam.id
                         matchDetails.awayTeamId = match.awayTeam.id
+                        fixtureList.add(matchDetails)
                     }
-
             }
-        return matchDetails
+        return fixtureList
     }
 }
