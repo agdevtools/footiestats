@@ -3,7 +3,7 @@ package com.footiestats.model.matches
 import com.google.gson.annotations.SerializedName
 
 
-data class MatchDetails (
+data class FixtureDetails (
 
         @SerializedName("id") var id : Int = 0,
         @SerializedName("utcDate") var utcDate : String = "",

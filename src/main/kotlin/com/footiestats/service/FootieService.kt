@@ -2,9 +2,8 @@ package com.footiestats.service
 
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
-import com.footiestats.model.matches.MatchDetails
-import com.footiestats.model.matches.Matches
-import com.footiestats.model.matches.MatchesModel
+import com.footiestats.model.matches.FixtureDetails
+import com.footiestats.model.matches.MatchesParentModel
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
@@ -35,8 +34,8 @@ class FootieService {
         return restTemplate.exchange(uri, HttpMethod.GET, getHeaders(), FootieStatsModel::class.java)
     }
 
-    private fun makeMatchesRestCall():ResponseEntity<MatchesModel> {
-        return restTemplate.exchange(matchesUri, HttpMethod.GET, getHeaders(), MatchesModel::class.java)
+    private fun makeMatchesRestCall():ResponseEntity<MatchesParentModel> {
+        return restTemplate.exchange(matchesUri, HttpMethod.GET, getHeaders(), MatchesParentModel::class.java)
     }
 
     fun getHeaders(): HttpEntity<String> {
@@ -59,17 +58,17 @@ class FootieService {
         return formDetails.split(",").toTypedArray()
     }
 
-    fun getCurrentMatchDay(response: ResponseEntity<MatchesModel>): Int? {
+    fun getCurrentMatchDay(response: ResponseEntity<MatchesParentModel>): Int? {
         return response.body?.matches?.get(0)?.season?.currentMatchday
     }
 
-    fun getNextMatchDay(response: ResponseEntity<MatchesModel>) : Int? {
+    fun getNextMatchDay(response: ResponseEntity<MatchesParentModel>) : Int? {
         return getCurrentMatchDay(response)?.plus(1)
     }
 
-   fun getNextFixtureDetails(response: ResponseEntity<MatchesModel>) : MatchDetails {
+   fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : FixtureDetails {
             val matches = response.body?.matches
-            var matchDetails = MatchDetails()
+            var matchDetails = FixtureDetails()
             if (matches != null) {
                 for (match in matches)
                     if (match.matchday.equals(getNextMatchDay(response))) {

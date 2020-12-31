@@ -2,9 +2,9 @@ package com.footiestats.model.matches
 
 import com.google.gson.annotations.SerializedName
 
-data class MatchesModel (
+data class MatchesParentModel (
 
         @SerializedName("count") var count : Int,
-        @SerializedName("matches") var matches : List<Matches>?
+        @SerializedName("matches") var matches : List<MatchesObject>?
 
 )
