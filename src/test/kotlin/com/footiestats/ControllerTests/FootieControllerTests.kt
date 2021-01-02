@@ -29,18 +29,18 @@ internal class FootieControllerTests{
 
     }
 
-    @Test
-    fun `Verify that FootieController GetForm calls Footie Service `() {
-
-        val expectedList = arrayOf("W", "W", "L","W","D")
-
-        whenever(footieService.getFormList(anyInt())).thenReturn(ResponseEntity.ok(expectedList))
-
-        val actualList = footieController.getForm(66)
-
-        verify(footieService,times(1)).getFormList(anyInt())
-        assertEquals(actualList.body?.size, 5)
-        assertEquals(actualList.body?.get(0),"W")
-        assertEquals(actualList.body?.get(4),"D")
-    }
+//    @Test
+//    fun `Verify that FootieController GetForm calls Footie Service `() {
+//
+//        val expectedList = arrayOf("W", "W", "L","W","D")
+//
+//        whenever(footieService.getFormList(anyInt())).thenReturn(ResponseEntity.ok(expectedList))
+//
+//        val actualList = footieController.getForm(66)
+//
+//        verify(footieService,times(1)).getFormList(anyInt())
+//        assertEquals(actualList.body?.size, 5)
+//        assertEquals(actualList.body?.get(0),"W")
+//        assertEquals(actualList.body?.get(4),"D")
+//    }
 }

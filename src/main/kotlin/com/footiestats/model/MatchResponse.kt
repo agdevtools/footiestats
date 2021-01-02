@@ -4,6 +4,6 @@ import com.footiestats.model.matches.FixtureDetails
 import com.google.gson.annotations.SerializedName
 
 data class MatchResponse (
-        @SerializedName("permission") var status : Int,
-        @SerializedName("matchDetails") var fixtureDetails : List<FixtureDetails>
+        @SerializedName("status") var status : Int,
+        @SerializedName("fixtureDetails") var fixtureDetails : List<FixtureDetails>
 )

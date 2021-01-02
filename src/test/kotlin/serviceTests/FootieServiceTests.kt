@@ -17,18 +17,18 @@ internal class FootieServiceTests{
         footieService = FootieService()
     }
 
-    @Test
-    fun `Verify that FootieService GetForm returns a List of 5 String elements `() {
-
-        val expectedlist = mutableListOf<String>()
-
-        expectedlist.addAll(listOf("W", "W", "L","W","D"))
-
-        val response = footieService.getFormList(66)
-
-        assertEquals(response.body?.size,5)
-
-    }
+//    @Test
+//    fun `Verify that FootieService GetForm returns a List of 5 String elements `() {
+//
+//        val expectedlist = mutableListOf<String>()
+//
+//        expectedlist.addAll(listOf("W", "W", "L","W","D"))
+//
+//        val response = footieService.getFormList(66)
+//
+//        assertEquals(response.body?.size,5)
+//
+//    }
 
     @Test
     fun `Verify that FootieService GetLeague returns a valid body`() {

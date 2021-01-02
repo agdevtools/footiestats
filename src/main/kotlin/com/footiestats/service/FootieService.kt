@@ -1,5 +1,6 @@
 package com.footiestats.service
 
+import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
 import com.footiestats.model.matches.FixtureDetails
@@ -20,9 +21,9 @@ class FootieService {
         return ResponseEntity(response.body, HttpStatus.OK)
     }
 
-   fun getFormList(teamId: Int) : ResponseEntity<Array<String>> {
+   fun getFormList() : ResponseEntity<List<FormModel>> {
         val response = makeStandingsRestCall()
-        return ResponseEntity(getLeagueTableList(response,teamId), HttpStatus.OK)
+        return ResponseEntity(getLeagueTableList(response), HttpStatus.OK)
     }
 
     fun getNextFixtures(): ResponseEntity<MatchResponse> {
@@ -45,17 +46,17 @@ class FootieService {
         return HttpEntity("parameters", headers)
     }
 
-    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>, teamId: Int):Array<String>? {
+    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):List<FormModel>? {
         val tables = response.body?.standings?.get(0)?.table
-        var formDetails = ""
+        var formDetails = mutableListOf<FormModel>()
+        var fixtureList = mutableListOf<FormModel>()
         if (tables != null) {
             for (table in tables) {
-                if (table.team?.id?.equals(teamId)!!) {
-                    formDetails = table.form.toString()
-                }
+                var form = FormModel(table.team?.id!!, table.form?.split(",")?.toTypedArray()?.toList()!!)
+                formDetails.add(form)
             }
         }
-        return formDetails.split(",").toTypedArray()
+        return formDetails
     }
 
     fun getCurrentMatchDay(response: ResponseEntity<MatchesParentModel>): Int? {
