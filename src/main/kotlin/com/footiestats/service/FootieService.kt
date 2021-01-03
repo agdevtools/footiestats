@@ -72,7 +72,7 @@ class FootieService {
             var fixtureList = mutableListOf<FixtureDetails>()
             if (matches != null) {
                 for (match in matches)
-                    if (match.matchday in getCurrentMatchDay(response)!!..getCurrentMatchDay(response)?.plus(4)!!) {
+                    if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(5)!!) {
                         var matchDetails = FixtureDetails()
                         matchDetails.id = match.id
                         matchDetails.status = match.status
