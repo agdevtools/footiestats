@@ -1,6 +1,12 @@
 package serviceTests
 
+import com.footiestats.model.FormModel
+import com.footiestats.model.MatchResponse
+import com.footiestats.model.matches.FixtureDetails
 import com.footiestats.service.FootieService
+import com.nhaarman.mockitokotlin2.isA
+import org.assertj.core.api.Assertions.assertThat
+import org.hamcrest.CoreMatchers.isA
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,18 +23,26 @@ internal class FootieServiceTests{
         footieService = FootieService()
     }
 
-//    @Test
-//    fun `Verify that FootieService GetForm returns a List of 5 String elements `() {
-//
-//        val expectedlist = mutableListOf<String>()
-//
-//        expectedlist.addAll(listOf("W", "W", "L","W","D"))
-//
-//        val response = footieService.getFormList(66)
-//
-//        assertEquals(response.body?.size,5)
-//
-//    }
+    @Test
+    fun `Verify that FootieService GetForm returns a List of 20 teams Form Model Data Types `() {
+
+        val response = footieService.getFormList()
+
+        assertEquals(response.body?.size,20)
+        assertEquals(response.body?.get(0)?.form?.size,5)
+        assert(response.body is List<FormModel>)
+
+    }
+
+    @Test
+    fun `Verify that FootieService GetNextFixtures returns a MatchResponse with a List of 5 FixtureDetails Data Types `() {
+
+        val response = footieService.getNextFixtures()
+
+        assert(response.body is MatchResponse)
+        assertEquals(response.body?.fixtureDetails?.size,5)
+        assert(response.body?.fixtureDetails is List<FixtureDetails>)
+    }
 
     @Test
     fun `Verify that FootieService GetLeague returns a valid body`() {
