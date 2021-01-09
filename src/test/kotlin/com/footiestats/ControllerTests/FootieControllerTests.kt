@@ -3,6 +3,7 @@ package com.footiestats.ControllerTests
 import com.footiestats.controller.FootieController
 import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
+import com.footiestats.model.footieStatsModel.*
 import com.footiestats.model.matches.FixtureDetails
 import com.footiestats.service.FootieService
 import com.nhaarman.mockitokotlin2.mock
@@ -40,10 +41,41 @@ internal class FootieControllerTests{
 
     @Test
     fun `Verify that FootieController GetLeague calls Footie Service `() {
+        val area = Area(2,"England")
+        val season = Season(1,"01/08/2020","01/06/2021",18,"")
+        val team1 = Team(1,"Man Utd", "")
+        val team2 = Team(2,"Newcastle", "")
+        val table1 = Table(1,team1,10,"WWWWW",10,0,0,30,100,0,100)
+        val table2 = Table(2,team2,10,"LLLLL",0,0,10,0,0,100,-100)
+        val expectedMutableTableList: MutableList<Table> = ArrayList<Table>()
+        expectedMutableTableList.add(table1)
+        expectedMutableTableList.add(table2)
+        val standings1 = Standings("test1","Prem","",expectedMutableTableList)
+        val standings2 = Standings("test2","Euro","",expectedMutableTableList)
+        val expectedMutableStandingsList: MutableList<Standings> = ArrayList<Standings>()
+        expectedMutableStandingsList.add(standings1)
+        expectedMutableStandingsList.add(standings2)
+        val expectedCompetition = Competition(2021,area, "test","test","test","01/01/2021")
+        val expectedFootieStatsModel = FootieStatsModel(expectedCompetition,season,expectedMutableStandingsList)
+        val expectedLeagueResponse = ResponseEntity(expectedFootieStatsModel,HttpStatus.OK)
 
-        footieController.getLeagueTable()
-        verify(footieService, times(1)).getLeagueTable()
+        whenever(footieService.getLeagueTable()).thenReturn(expectedLeagueResponse)
 
+        mockMvc?.perform(MockMvcRequestBuilders.get("/api/league")
+                .contentType(MediaType.APPLICATION_JSON))
+                ?.andExpect(MockMvcResultMatchers.status().isOk)
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.competition.id", Is.`is`(2021)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.competition.name", Is.`is`("test")))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.season.id", Is.`is`(1)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.season.currentMatchday", Is.`is`(18)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].stage", Is.`is`("test1")))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[1].stage", Is.`is`("test2")))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[0].position", Is.`is`(1)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[0].won", Is.`is`(10)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[1].position", Is.`is`(2)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[1].won", Is.`is`(0)))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[0].team.name", Is.`is`("Man Utd")))
+                ?.andExpect(MockMvcResultMatchers.jsonPath("$.standings[0].table[1].team.name", Is.`is`("Newcastle")))
     }
 
     @Test
