@@ -48,11 +48,10 @@ class FootieService {
 
     fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):List<FormModel>? {
         val tables = response.body?.standings?.get(0)?.table
-        var formDetails = mutableListOf<FormModel>()
-        var fixtureList = mutableListOf<FormModel>()
+        val formDetails = mutableListOf<FormModel>()
         if (tables != null) {
             for (table in tables) {
-                var form = FormModel(table.team?.id!!, table.form?.split(",")?.toTypedArray()?.toList()!!)
+                val form = FormModel(table.team?.id!!, table.form?.split(",")?.toTypedArray()?.toList()!!)
                 formDetails.add(form)
             }
         }
@@ -69,11 +68,11 @@ class FootieService {
 
    fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : List<FixtureDetails> {
             val matches = response.body?.matches
-            var fixtureList = mutableListOf<FixtureDetails>()
+            val fixtureList = mutableListOf<FixtureDetails>()
             if (matches != null) {
                 for (match in matches)
                     if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(5)!!) {
-                        var matchDetails = FixtureDetails()
+                        val matchDetails = FixtureDetails()
                         matchDetails.id = match.id
                         matchDetails.status = match.status
                         matchDetails.utcDate = match.utcDate
