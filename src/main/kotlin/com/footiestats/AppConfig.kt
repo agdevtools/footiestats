@@ -1,4 +1,4 @@
-package com.footiestats.service
+package com.footiestats
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean

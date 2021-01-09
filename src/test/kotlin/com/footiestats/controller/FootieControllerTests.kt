@@ -1,6 +1,5 @@
-package com.footiestats.ControllerTests
+package com.footiestats.controller
 
-import com.footiestats.controller.FootieController
 import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.*
@@ -11,7 +10,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.hamcrest.core.Is
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
