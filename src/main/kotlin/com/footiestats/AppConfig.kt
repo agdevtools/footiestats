@@ -15,7 +15,7 @@ class AppConfig {
             val source = UrlBasedCorsConfigurationSource()
             val config = CorsConfiguration()
             config.allowCredentials = true
-            config.addAllowedOrigin("http://localhost:3000")
+            //config.addAllowedOrigin("http://localhost:3000")
             config.addAllowedOrigin("https://unitedappfrontend.herokuapp.com")
             config.addAllowedHeader("*")
             config.addAllowedMethod("*")
