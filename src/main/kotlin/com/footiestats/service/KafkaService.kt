@@ -13,7 +13,7 @@ class KafkaService {
     private val kafkaTemplate: KafkaTemplate<String, String>? = null
 
     private val logger: Logger = LoggerFactory.getLogger(com.footiestats.service.KafkaService::class.java)
-    private val TOPIC = "footie23"
+    private val TOPIC = "footiestats"
 
     fun sendMessage(message: String?) {
         logger.info(String.format("$$$ -> Producing message --> %s", message))
