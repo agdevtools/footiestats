@@ -21,7 +21,7 @@ class FootieService {
         return ResponseEntity(response.body, HttpStatus.OK)
     }
 
-   fun getFormList() : ResponseEntity<List<FormModel>> {
+    fun getFormList() : ResponseEntity<List<FormModel>> {
         val response = makeStandingsRestCall()
         return ResponseEntity(getLeagueTableList(response), HttpStatus.OK)
     }
@@ -66,24 +66,24 @@ class FootieService {
         return getCurrentMatchDay(response)?.plus(1)
     }
 
-   fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : List<FixtureDetails> {
-            val matches = response.body?.matches
-            val fixtureList = mutableListOf<FixtureDetails>()
-            if (matches != null) {
-                for (match in matches)
-                    if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(5)!!) {
-                        val matchDetails = FixtureDetails()
-                        matchDetails.id = match.id
-                        matchDetails.status = match.status
-                        matchDetails.utcDate = match.utcDate
-                        matchDetails.matchday = match.matchday
-                        matchDetails.homeTeam = match.homeTeam.name
-                        matchDetails.awayTeam = match.awayTeam.name
-                        matchDetails.homeTeamId = match.homeTeam.id
-                        matchDetails.awayTeamId = match.awayTeam.id
-                        fixtureList.add(matchDetails)
-                    }
-            }
+    fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : List<FixtureDetails> {
+        val matches = response.body?.matches
+        val fixtureList = mutableListOf<FixtureDetails>()
+        if (matches != null) {
+            for (match in matches)
+                if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(5)!!) {
+                    val matchDetails = FixtureDetails()
+                    matchDetails.id = match.id
+                    matchDetails.status = match.status
+                    matchDetails.utcDate = match.utcDate
+                    matchDetails.matchday = match.matchday
+                    matchDetails.homeTeam = match.homeTeam.name
+                    matchDetails.awayTeam = match.awayTeam.name
+                    matchDetails.homeTeamId = match.homeTeam.id
+                    matchDetails.awayTeamId = match.awayTeam.id
+                    fixtureList.add(matchDetails)
+                }
+        }
         return fixtureList
     }
 }
