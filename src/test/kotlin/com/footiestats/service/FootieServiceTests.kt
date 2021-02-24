@@ -12,11 +12,11 @@ import org.springframework.http.MediaType
 
 internal class FootieServiceTests{
 
-    private lateinit var footieService : FootieService
+    private lateinit var footieService : FootieServiceImpl
 
     @BeforeEach
     fun setUp() {
-        footieService = FootieService()
+        footieService = FootieServiceImpl()
     }
 
     @Test

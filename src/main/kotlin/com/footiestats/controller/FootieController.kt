@@ -5,8 +5,6 @@ import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
 import com.footiestats.model.footieStatsModel.FootieStatsModel
 import com.footiestats.service.FootieService
-import com.footiestats.service.KafkaService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.http.ResponseEntity
