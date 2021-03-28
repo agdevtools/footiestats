@@ -1,4 +1,4 @@
-package com.footiestats.model.footieStatsModel
+package com.footiestats.model.footiestatsmodel
 
 import com.google.gson.annotations.SerializedName
 

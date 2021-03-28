@@ -2,7 +2,7 @@ package com.footiestats.controller
 
 import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
-import com.footiestats.model.footieStatsModel.*
+import com.footiestats.model.footiestatsmodel.*
 import com.footiestats.model.matches.FixtureDetails
 import com.footiestats.service.FootieService
 import com.nhaarman.mockitokotlin2.mock

@@ -2,7 +2,7 @@ package com.footiestats.service
 
 import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
-import com.footiestats.model.footieStatsModel.FootieStatsModel
+import com.footiestats.model.footiestatsmodel.FootieStatsModel
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 

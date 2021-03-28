@@ -3,7 +3,7 @@ package com.footiestats.controller
 import com.footiestats.AspectConfig
 import com.footiestats.model.FormModel
 import com.footiestats.model.MatchResponse
-import com.footiestats.model.footieStatsModel.FootieStatsModel
+import com.footiestats.model.footiestatsmodel.FootieStatsModel
 import com.footiestats.service.FootieService
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
