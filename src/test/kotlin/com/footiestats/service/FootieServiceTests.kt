@@ -30,15 +30,15 @@ internal class FootieServiceTests{
 
     }
 
-    @Test
-    fun `Verify that FootieService GetNextFixtures returns a MatchResponse with a List of 5 FixtureDetails Data Types `() {
-
-        val response = footieService.getNextFixtures()
-
-        assert(response.body is MatchResponse)
-        assertEquals(response.body?.fixtureDetails?.size,5)
-        assert(response.body?.fixtureDetails is List<FixtureDetails>)
-    }
+//    @Test
+//    fun `Verify that FootieService GetNextFixtures returns a MatchResponse with a List of 5 FixtureDetails Data Types `() {
+//
+//        val response = footieService.getNextFixtures()
+//
+//        assert(response.body is MatchResponse)
+//        assertEquals(response.body?.fixtureDetails?.size,5)
+//        assert(response.body?.fixtureDetails is List<FixtureDetails>)
+//    }
 
     @Test
     fun `Verify that FootieService GetLeague returns a valid body`() {

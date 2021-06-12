@@ -5,6 +5,11 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	kotlin("jvm") version "1.4.21"
 	kotlin("plugin.spring") version "1.4.21"
+	id ("com.heroku.sdk.heroku-gradle") version "2.0.0"
+}
+
+heroku {
+	appName = "footiestats"
 }
 
 group = "com.footiestats"
