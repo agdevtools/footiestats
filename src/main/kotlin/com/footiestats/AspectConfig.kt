@@ -1,10 +1,8 @@
 package com.footiestats
 
-import com.footiestats.service.KafkaService
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.EnableAspectJAutoProxy
@@ -21,13 +19,9 @@ class AspectConfig {
     class ControllerLoggingAllAdvice {
         val logger = Logger.getLogger(AspectConfig::class.java.name)
 
-        @Autowired
-        val kafkaService = KafkaService();
-
         @Before("execution(public * com.footiestats.controller.FootieController.*(..))")
         fun logController(joinPoint: JoinPoint) {
             logger.info("Logging controller  $joinPoint  with no arg ")
-            kafkaService.sendMessage("Received request for $joinPoint")
         }
     }
 
