@@ -33,7 +33,7 @@ node {
         sh './gradlew clean build -x test'
         sh 'curl -H "Content-Type: application/json" --request POST \\\n' +
                 '  --url https://events.pagerduty.com/v2/change/enqueue \\\n' +
-                '  --data \'{"payload":{"summary":"From Jenkins","timestamp":"2021-07-02T11:15:22Z","source":"string","custom_details":{}},"routing_key":"e429be3c8ea94c06c0429c80719dd399","links":[{"href":"string","text":"string"}]}\''
+                '  --data \'{"payload":{"summary":"From Jenkins","source":"string","custom_details":{}},"routing_key":"e429be3c8ea94c06c0429c80719dd399","links":[{"href":"string","text":"string"}]}\''
 
     }
 
