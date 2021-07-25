@@ -26,7 +26,7 @@ class AspectConfig {
         @Before("execution(public * com.footiestats.controller.FootieController.*(..))")
         fun logController(joinPoint: JoinPoint) {
             logger.info("Logging controller  $joinPoint  with no arg ")
-            rabbitMqProducer.send("Received request for $joinPoint")
+            rabbitMqProducer.send2("Received request for $joinPoint")
         }
     }
 
