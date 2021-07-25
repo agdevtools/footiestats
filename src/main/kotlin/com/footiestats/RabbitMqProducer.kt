@@ -3,9 +3,9 @@ package com.footiestats
 import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
-import com.rabbitmq.client.Delivery
 import org.springframework.stereotype.Service
 import java.nio.charset.StandardCharsets
+import java.util.logging.Logger
 
 
 @Service
@@ -55,7 +55,8 @@ class RabbitMqProducer {
         channel.queueDeclare("hello", true, false, false, null)
        // val message = "Hello CloudAMQP!"
         channel.basicPublish("", "hello", null, message.toByteArray())
-        println(" [x] Sent '$message'")
+        val logger = Logger.getLogger(RabbitMqProducer::class.java.name)
+        logger.info(" [x] Sent '$message'")
     }
 
 }
