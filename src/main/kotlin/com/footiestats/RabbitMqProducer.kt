@@ -19,4 +19,25 @@ class RabbitMqProducer {
         }
     }
 
+    val QUEUE_NAME = "hello"
+    @Throws(Exception::class)
+    fun send(message: String) {
+        val factory = ConnectionFactory()
+        factory.host = "squid.rmq.cloudamqp.com"
+        factory.setUsername("cvofxaso");
+        factory.setPassword("bh2MdB29UtcNXf7b2rwEB4gXGbmho9fV");
+        factory.newConnection("amqps://cvofxaso:bh2MdB29UtcNXf7b2rwEB4gXGbmho9fV@squid.rmq.cloudamqp.com/cvofxaso/").use { connection ->
+            connection.createChannel().use { channel ->
+                channel.queueDeclare(QUEUE_NAME, false, false, false, null)
+                channel.basicPublish(
+                    "",
+                    QUEUE_NAME,
+                    null,
+                    message.toByteArray(StandardCharsets.UTF_8)
+                )
+                println(" [x] Sent '$message'")
+            }
+        }
+    }
+
 }
