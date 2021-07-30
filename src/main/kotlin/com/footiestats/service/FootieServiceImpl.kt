@@ -50,13 +50,14 @@ class FootieServiceImpl : FootieService {
     fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):List<FormModel>? {
         val tables = response.body?.standings?.get(0)?.table
         val formDetails = mutableListOf<FormModel>()
-        if (tables != null) {
+        if (tables?.get(0)?.form != null) {
             for (table in tables) {
                 val form = FormModel(table.team?.id!!, table.form?.split(",")?.toTypedArray()?.toList()!!)
                 formDetails.add(form)
             }
+            return formDetails
         }
-        return formDetails
+       return emptyList()
     }
 
     fun getCurrentMatchDay(response: ResponseEntity<MatchesParentModel>): Int? {

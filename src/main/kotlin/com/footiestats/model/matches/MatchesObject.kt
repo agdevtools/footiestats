@@ -11,7 +11,7 @@ data class MatchesObject (
         @SerializedName("status") var status : String = "",
         @SerializedName("matchday") var matchday : Int = 0,
         @SerializedName("stage") var stage : String = "",
-        @SerializedName("group") var group : String = "",
+        @SerializedName("group") var group : String? = "",
         @SerializedName("lastUpdated") var lastUpdated : String = "",
         @SerializedName("homeTeam") var homeTeam : HomeTeam = HomeTeam(),
         @SerializedName("awayTeam") var awayTeam : AwayTeam = AwayTeam()

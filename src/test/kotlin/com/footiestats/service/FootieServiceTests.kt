@@ -1,8 +1,6 @@
 package com.footiestats.service
 
 import com.footiestats.model.FormModel
-import com.footiestats.model.MatchResponse
-import com.footiestats.model.matches.FixtureDetails
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
