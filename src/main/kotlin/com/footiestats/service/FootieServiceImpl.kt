@@ -8,6 +8,9 @@ import com.footiestats.model.matches.MatchesParentModel
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 private const val uri = "https://api.football-data.org/v2/competitions/PL/standings"
@@ -65,6 +68,12 @@ class FootieServiceImpl : FootieService {
     }
 
     fun getNextMatchDay(response: ResponseEntity<MatchesParentModel>) : Int? {
+        val sdformat = SimpleDateFormat("yyyy-MM-dd")
+        val nextMatchDate: Date = sdformat.parse(response.body?.matches?.get(0)?.utcDate)
+        val currentDate = Date()
+        if (nextMatchDate > currentDate) {
+            return getCurrentMatchDay(response)
+        }
         return getCurrentMatchDay(response)?.plus(1)
     }
 
@@ -73,7 +82,7 @@ class FootieServiceImpl : FootieService {
         val fixtureList = mutableListOf<FixtureDetails>()
         if (matches != null) {
             for (match in matches)
-                if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(5)!!) {
+                if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(4)!!) {
                     val matchDetails = FixtureDetails()
                     matchDetails.id = match.id
                     matchDetails.status = match.status
