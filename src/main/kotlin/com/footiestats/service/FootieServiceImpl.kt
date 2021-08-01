@@ -8,7 +8,6 @@ import com.footiestats.model.matches.MatchesParentModel
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,14 +19,14 @@ private val restTemplate = RestTemplate()
 @Service
 class FootieServiceImpl : FootieService {
 
+    val standingsResponse = makeStandingsRestCall()
+
     override fun getLeagueTable(): ResponseEntity<FootieStatsModel> {
-        val response = makeStandingsRestCall()
-        return ResponseEntity(response.body, HttpStatus.OK)
+        return ResponseEntity(standingsResponse.body, HttpStatus.OK)
     }
 
     override fun getFormList() : ResponseEntity<List<FormModel>> {
-        val response = makeStandingsRestCall()
-        return ResponseEntity(getLeagueTableList(response), HttpStatus.OK)
+        return ResponseEntity(getFormTableList(standingsResponse), HttpStatus.OK)
     }
 
     override fun getNextFixtures(): ResponseEntity<MatchResponse> {
@@ -50,7 +49,7 @@ class FootieServiceImpl : FootieService {
         return HttpEntity("parameters", headers)
     }
 
-    fun getLeagueTableList(response: ResponseEntity<FootieStatsModel>):List<FormModel>? {
+    fun getFormTableList(response: ResponseEntity<FootieStatsModel>):List<FormModel>? {
         val tables = response.body?.standings?.get(0)?.table
         val formDetails = mutableListOf<FormModel>()
         if (tables?.get(0)?.form != null) {
@@ -63,36 +62,39 @@ class FootieServiceImpl : FootieService {
        return emptyList()
     }
 
-    fun getCurrentMatchDay(response: ResponseEntity<MatchesParentModel>): Int? {
-        return response.body?.matches?.get(0)?.season?.currentMatchday
-    }
-
-    fun getNextMatchDay(response: ResponseEntity<MatchesParentModel>) : Int? {
-        val sdformat = SimpleDateFormat("yyyy-MM-dd")
-        val nextMatchDate: Date = sdformat.parse(response.body?.matches?.get(0)?.utcDate)
+    fun getNextMatchDay(nextMatchDate: Date, currentMatchDay : Int) : Int {
         val currentDate = Date()
         if (nextMatchDate > currentDate) {
-            return getCurrentMatchDay(response)
+            return currentMatchDay
         }
-        return getCurrentMatchDay(response)?.plus(1)
+        return currentMatchDay + 1
     }
 
     fun getNextFixtureDetails(response: ResponseEntity<MatchesParentModel>) : List<FixtureDetails> {
         val matches = response.body?.matches
+        val currentMatchDay = matches?.get(0)?.season?.currentMatchday
+        val sdFormat = SimpleDateFormat("yyyy-MM-dd")
+        val nextMatchDate: Date = sdFormat.parse(matches?.get(0)?.utcDate)
         val fixtureList = mutableListOf<FixtureDetails>()
+
+        if (currentMatchDay == null) {
+            currentMatchDay == 1
+        }
         if (matches != null) {
             for (match in matches)
-                if (match.matchday in getNextMatchDay(response)!!..getCurrentMatchDay(response)?.plus(4)!!) {
-                    val matchDetails = FixtureDetails()
-                    matchDetails.id = match.id
-                    matchDetails.status = match.status
-                    matchDetails.utcDate = match.utcDate
-                    matchDetails.matchday = match.matchday
-                    matchDetails.homeTeam = match.homeTeam.name
-                    matchDetails.awayTeam = match.awayTeam.name
-                    matchDetails.homeTeamId = match.homeTeam.id
-                    matchDetails.awayTeamId = match.awayTeam.id
-                    fixtureList.add(matchDetails)
+                if (currentMatchDay != null) {
+                    if (match.matchday in getNextMatchDay(nextMatchDate, currentMatchDay)..currentMatchDay.plus(4)) {
+                        val matchDetails = FixtureDetails()
+                        matchDetails.id = match.id
+                        matchDetails.status = match.status
+                        matchDetails.utcDate = match.utcDate
+                        matchDetails.matchday = match.matchday
+                        matchDetails.homeTeam = match.homeTeam.name
+                        matchDetails.awayTeam = match.awayTeam.name
+                        matchDetails.homeTeamId = match.homeTeam.id
+                        matchDetails.awayTeamId = match.awayTeam.id
+                        fixtureList.add(matchDetails)
+                    }
                 }
         }
         return fixtureList
