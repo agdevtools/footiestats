@@ -19,13 +19,14 @@ private val restTemplate = RestTemplate()
 @Service
 class FootieServiceImpl : FootieService {
 
-    val standingsResponse = makeStandingsRestCall()
 
     override fun getLeagueTable(): ResponseEntity<FootieStatsModel> {
+        val standingsResponse = makeStandingsRestCall()
         return ResponseEntity(standingsResponse.body, HttpStatus.OK)
     }
 
     override fun getFormList() : ResponseEntity<List<FormModel>> {
+        val standingsResponse = makeStandingsRestCall()
         return ResponseEntity(getFormTableList(standingsResponse), HttpStatus.OK)
     }
 

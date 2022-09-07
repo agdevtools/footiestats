@@ -20,13 +20,13 @@ class AspectConfig {
     class ControllerLoggingAllAdvice {
         val logger = Logger.getLogger(AspectConfig::class.java.name)
 
-        @Autowired
-        val rabbitMqProducer = RabbitMqProducer();
+//        @Autowired
+//        val rabbitMqProducer = RabbitMqProducer();
 
         @Before("execution(public * com.footiestats.controller.FootieController.*(..))")
         fun logController(joinPoint: JoinPoint) {
             logger.info("Logging controller  $joinPoint  with no arg ")
-            rabbitMqProducer.send("Received request for $joinPoint")
+         //   rabbitMqProducer.send("Received request for $joinPoint")
         }
     }
 

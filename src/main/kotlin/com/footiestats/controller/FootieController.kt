@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController
 class FootieController(private val footieService: FootieService) {
 
     @RequestMapping(value = ["/league"])
-    fun getLeagueTable(): ResponseEntity<FootieStatsModel> = footieService.getLeagueTable()
+    fun getLeagueTable(): ResponseEntity<FootieStatsModel> {
+        return footieService.getLeagueTable()
+    }
 
     @GetMapping(value = ["/form"])
     fun getForm(): ResponseEntity<kotlin.collections.List<FormModel>> = footieService.getFormList()
